@@ -1,4 +1,6 @@
 google-genai>=0.8.0
 pillow>=10.0.0
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
 # ② SDXL 단계에서 추가 예정: diffusers, torch
-# ④ 서버 단계에서 추가 예정: fastapi, uvicorn[standard], python-multipart

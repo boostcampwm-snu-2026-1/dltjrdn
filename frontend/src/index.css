@@ -48,16 +48,25 @@ h1 {
   overflow: hidden;
 }
 
-.upload-box:hover {
+.upload-box:hover,
+.upload-box.dragging {
   border-color: #4a9c38;
   background: #f0f7ee;
 }
 
 .plus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   font-size: 48px;
   font-weight: 300;
   color: #9aa39d;
   line-height: 1;
+}
+
+.plus small {
+  font-size: 13px;
 }
 
 .preview {
@@ -79,4 +88,54 @@ textarea {
 textarea:focus {
   outline: none;
   border-color: #4a9c38;
+}
+
+.generate-btn {
+  font: inherit;
+  font-weight: 600;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #4a9c38;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.generate-btn:hover:not(:disabled) {
+  background: #3d8530;
+}
+
+.generate-btn:disabled {
+  background: #a8c9a0;
+  cursor: default;
+}
+
+.error {
+  margin: 0;
+  color: #c0392b;
+  font-size: 14px;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid #d4dad6;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.result span {
+  font-size: 13px;
+  color: #7a847d;
+}
+
+.result p {
+  margin: 0;
+  font-family: ui-monospace, "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1f2421;
 }
