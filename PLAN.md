@@ -9,15 +9,15 @@
 
 목표: 입력(텍스트 아이디어 / 이미지)을 받아 **SDXL용 영어 프롬프트 한 줄**을 출력하는 `prompt_skill.py` 완성.
 
-- [ ] 개발 환경 세팅 (Python 3.10+, 가상환경, `pip install google-genai pillow`)
-- [ ] `GEMINI_API_KEY` 환경변수 등록 (키 하드코딩 금지 확인)
-- [ ] Gemini API 호출 최소 예제 동작 확인 (텍스트 → 텍스트)
-- [ ] `build_skin_prompt(key, idea="...")` — **텍스트 모드** 구현
-- [ ] `build_skin_prompt(key, image_path="...")` — **이미지 모드** 구현 (Gemini 비전)
-- [ ] 출력 규칙 강제: 영어 한 줄 / 캐릭터 묘사 / 색·의상·헤드기어·액세서리 포함
-- [ ] 금지어 필터: `Minecraft`, `skin`, `pixel art`, 포즈·배경·조명·화질 표현 제거
-- [ ] few-shot 예시 2~3개 넣어 출력 품질·형식 안정화
-- [ ] 입력 5개로 수동 테스트 (좀비 해적, 마법사 등) → 출력 프롬프트 눈으로 확인
+- [x] 개발 환경 세팅 (Python 3.10+, `pip install google-genai pillow`)
+- [x] `GEMINI_API_KEY` 환경변수 등록 (키 하드코딩 금지 확인)
+- [x] Gemini API 호출 최소 예제 동작 확인 (텍스트 → 텍스트)
+- [x] `build_skin_prompt(key, idea="...")` — **텍스트 모드** 구현
+- [x] `build_skin_prompt(key, image_path="...")` — **이미지 모드** 구현 (Gemini 비전) ※ 코드 완료, 실사진 테스트 미완
+- [x] 출력 규칙 강제: 영어 한 줄 / 캐릭터 묘사 / 색·의상·헤드기어·액세서리 포함
+- [x] 금지어 필터: `Minecraft`, `skin`, `pixel art`, 포즈·배경·조명·화질 표현 제거
+- [x] few-shot 예시 2~3개 넣어 출력 품질·형식 안정화
+- [~] 입력 5개로 수동 테스트 — 텍스트 3개 확인 완료 / 이미지 입력 테스트 남음
 
 **1주차 끝 = 콘솔에서 아이디어/이미지 넣으면 그럴듯한 영어 프롬프트가 나온다.**
 
