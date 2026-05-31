@@ -28,9 +28,12 @@ STRICT RULES:
 - Describe the CHARACTER, not a scene.
 - Include: role/archetype, clothing, explicit COLORS, headgear, 1-3 signature accessories.
 - 8-20 words. Prefer concrete colors over vague adjectives.
-- Describe only VISUAL appearance. NEVER use character names, franchise/anime
-  titles, or proper nouns (e.g. write "a ninja boy in an orange jumpsuit", not the
-  character's name). Translate recognition into concrete visual features.
+- ALWAYS describe concrete visual features — the creature/character TYPE (e.g. dinosaur,
+  penguin, knight), colors, clothing, headgear, distinctive body parts — detailed enough
+  to DRAW the character WITHOUT knowing its name.
+- You MAY also add a widely-famous character's name, but the name ALONE is never enough;
+  the visual description must stand on its own. The name must never replace features.
+- For obscure or original characters, omit the name and describe appearance only.
 - FORBIDDEN: poses, camera angles, background, lighting, image-quality words
   (e.g. "high quality", "4k", "detailed"), and the words "Minecraft", "skin", "pixel art".
 
