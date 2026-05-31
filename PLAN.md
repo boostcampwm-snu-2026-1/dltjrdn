@@ -27,16 +27,18 @@
 
 목표: 1주차 프롬프트를 **실제 64×64 스킨 PNG**로 바꾸고, 형식이 맞는지 자동 검증.
 
-- [ ] SDXL = "프롬프트 → 이미지" 디퓨전 모델임을 이해 (새로 학습 X, 갖다 씀)
-- [ ] Monadical 레포 클론: `github.com/Monadical-SAS/minecraft_skin_generator`
-- [ ] 모델 `monadical-labs/minecraft-skin-generator-sdxl` 카드/라이선스 확인 (GPL-3.0 전파 주의)
-- [ ] **Google Colab 노트북**에서 GPU 추론 환경 구성 (`diffusers` + `torch`)
-- [ ] 레포의 `bin/minecraft-skins-sdxl.py`를 래핑 → `generate_skin(prompt) -> PIL.Image`
-- [ ] 프롬프트 1개로 스킨 1장 생성 성공 (눈으로 확인)
-- [ ] ③ `mc_skin_generator.py`의 `validate_skin` 작성/이식 (64×64·RGBA·투명레이어 체크)
-- [ ] `PARTS` / `UV` 좌표 상수 정의 (스킨 형식 단일 출처)
-- [ ] 생성 결과가 `validate_skin()` 통과(빈 리스트) 하는지 확인
-- [ ] ① → ② → ③ 연결: "아이디어 → 프롬프트 → 스킨 → 검증" 한 번에 돌려보기
+- [x] SDXL = "프롬프트 → 이미지" 디퓨전 모델임을 이해 (새로 학습 X, 갖다 씀)
+- [x] 모델 `monadical-labs/minecraft-skin-generator-sdxl` 사용 (라이선스 확인 필요 — GPL-3.0 전파 주의)
+- [x] **로컬 GPU**(RTX 4060 Ti 8GB) 추론 환경 구성 — Python 3.12 venv + torch cu121 + diffusers
+- [x] `sdxl_skin.py` 작성 → `generate_skin(prompt) -> PIL.Image` (diffusers 직접, fp16+offset 최적화)
+- [x] 프롬프트 1개로 스킨 1장 생성 성공 (눈으로 확인)
+- [x] ③ `mc_skin_generator.py`의 `validate_skin` 작성 (64×64·RGBA·베이스 불투명 체크)
+- [x] `PARTS` / `UV` 좌표 상수 정의 (스킨 형식 단일 출처)
+- [x] 생성 결과가 `validate_skin()` 통과(빈 리스트) 하는지 확인
+- [ ] ① → ② → ③ 연결: 백엔드 `/generate`에서 "프롬프트 → 스킨 → 검증" 한 번에 (← 다음)
+
+> 참고: CLAUDE.md는 Colab + Monadical 레포 스크립트 래핑을 권장했으나, 로컬 GPU가 있어
+> diffusers `DiffusionPipeline`로 모델을 직접 로드하는 방식으로 진행함 (결과 검증 통과).
 
 **2주차 끝 = 텍스트 한 줄 넣으면 검증 통과한 스킨 PNG가 나온다 (콘솔/노트북 기준).**
 
