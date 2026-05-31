@@ -17,7 +17,7 @@ import re
 from google import genai
 from google.genai import types
 
-# Gemini 모델 — 텍스트/비전 모두 지원
+# Gemini 모델 — 텍스트/비전 모두 지원 (무료 등급 있는 2.5-flash)
 MODEL = "gemini-2.5-flash"
 
 # 출력 규칙을 강제하는 시스템 지침 (모델이 영어로 출력하도록 영어로 작성)
@@ -80,9 +80,6 @@ def build_skin_prompt(key: str, idea: str = None, image_path: str = None) -> str
     config = types.GenerateContentConfig(
         system_instruction=SYSTEM_INSTRUCTION,
         temperature=0.7,
-        # 구글 검색 grounding: 모델이 모르는 캐릭터(예: 마이너 애니 캐릭터)를
-        # 실시간 검색해 정체(종·외형)를 파악하도록 보강한다.
-        tools=[types.Tool(google_search=types.GoogleSearch())],
     )
 
     contents = []
