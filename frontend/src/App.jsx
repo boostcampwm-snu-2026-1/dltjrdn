@@ -9,8 +9,9 @@ function App() {
   // 업로드한 이미지 파일 + 미리보기 URL
   const [imageFile, setImageFile] = useState(null)
   const [imageUrl, setImageUrl] = useState(null)
-  // 생성된 프롬프트 / 로딩 / 에러
+  // 생성 결과 (프롬프트 + 스킨) / 로딩 / 에러
   const [prompt, setPrompt] = useState('')
+  const [skin, setSkin] = useState('') // 스킨 PNG dataURL
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // 드래그 중 여부 (박스 강조용)
@@ -45,10 +46,11 @@ function App() {
     applyImage(e.dataTransfer.files[0])
   }
 
-  // 프롬프트 생성 요청
+  // 스킨 생성 요청 (① 프롬프트 → ② SDXL 스킨)
   async function handleGenerate() {
     setError('')
     setPrompt('')
+    setSkin('')
     if (!idea && !imageFile) {
       setError('아이디어를 입력하거나 사진을 올려주세요.')
       return
@@ -59,13 +61,17 @@ function App() {
       if (idea) form.append('idea', idea)
       if (imageFile) form.append('image', imageFile)
 
-      const res = await fetch(`${API}/generate-prompt`, {
+      const res = await fetch(`${API}/generate`, {
         method: 'POST',
         body: form,
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.detail || '요청 실패')
       setPrompt(data.prompt)
+      setSkin(data.image)
+      if (!data.valid) {
+        setError('스킨 형식 검증 경고: ' + (data.errors || []).join(', '))
+      }
     } catch (e) {
       setError(e.message)
     } finally {
@@ -124,15 +130,19 @@ function App() {
       </label>
 
       <button className="generate-btn" onClick={handleGenerate} disabled={loading}>
-        {loading ? '생성 중…' : '프롬프트 생성 (테스트)'}
+        {loading ? '스킨 생성 중… (수십 초)' : '스킨 생성'}
       </button>
 
       {error && <p className="error">{error}</p>}
 
-      {prompt && (
+      {skin && (
         <div className="result">
-          <span>생성된 프롬프트</span>
-          <p>{prompt}</p>
+          <span>생성된 스킨 (64×64)</span>
+          <img className="skin-img" src={skin} alt="생성된 마인크래프트 스킨" />
+          <a className="download-btn" href={skin} download="skin.png">
+            ⬇ 다운로드 (PNG)
+          </a>
+          {prompt && <p className="prompt-text">프롬프트: {prompt}</p>}
         </div>
       )}
     </main>

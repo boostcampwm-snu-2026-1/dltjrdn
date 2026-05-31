@@ -157,8 +157,39 @@ textarea:focus {
 
 .result p {
   margin: 0;
-  font-family: ui-monospace, "Courier New", monospace;
   font-size: 14px;
   line-height: 1.5;
   color: #1f2421;
+}
+
+/* 생성된 스킨 — 64×64를 크게, 픽셀 또렷하게 */
+.skin-img {
+  width: 256px;
+  height: 256px;
+  align-self: center;
+  image-rendering: pixelated;
+  border: 1px solid #d4dad6;
+  border-radius: 8px;
+  background: #f0f0f0;
+}
+
+.download-btn {
+  align-self: center;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #4a9c38;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.download-btn:hover {
+  background: #3d8530;
+}
+
+.prompt-text {
+  font-family: ui-monospace, "Courier New", monospace;
+  color: #7a847d !important;
+  font-size: 12px !important;
 }
