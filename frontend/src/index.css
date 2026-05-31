@@ -36,6 +36,7 @@ h1 {
 
 /* + 업로드 박스 */
 .upload-box {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,6 +47,28 @@ h1 {
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
   overflow: hidden;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
 }
 
 .upload-box:hover,

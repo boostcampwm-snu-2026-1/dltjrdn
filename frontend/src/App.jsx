@@ -29,6 +29,15 @@ function App() {
     applyImage(e.target.files[0])
   }
 
+  // 업로드한 사진 제거
+  function handleRemoveImage(e) {
+    e.preventDefault() // label 클릭으로 파일창 열리는 것 방지
+    e.stopPropagation()
+    if (imageUrl) URL.revokeObjectURL(imageUrl) // 미리보기 메모리 해제
+    setImageFile(null)
+    setImageUrl(null)
+  }
+
   // 드래그앤드롭
   function handleDrop(e) {
     e.preventDefault()
@@ -81,7 +90,16 @@ function App() {
           onDrop={handleDrop}
         >
           {imageUrl ? (
-            <img className="preview" src={imageUrl} alt="업로드한 이미지 미리보기" />
+            <>
+              <img className="preview" src={imageUrl} alt="업로드한 이미지 미리보기" />
+              <button
+                className="remove-btn"
+                onClick={handleRemoveImage}
+                title="사진 제거"
+              >
+                ✕
+              </button>
+            </>
           ) : (
             <span className="plus">＋<small>클릭 또는 드래그</small></span>
           )}
