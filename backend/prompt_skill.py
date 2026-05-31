@@ -46,6 +46,8 @@ def _sanitize(text: str) -> str:
     # 줄바꿈/연속 공백을 하나로, 따옴표 제거
     line = " ".join(text.split())
     line = line.strip().strip('"').strip("'").strip()
+    # 끝의 마침표 제거 (CLAUDE.md 스타일: 마침표 없는 한 줄)
+    line = line.rstrip(".")
     # 금지 단어 제거 (대소문자 무시)
     for word in ("minecraft", "pixel art", "pixelated", "skin"):
         line = re.sub(rf"\b{re.escape(word)}\b", "", line, flags=re.IGNORECASE)
