@@ -162,14 +162,21 @@ textarea:focus {
   color: #1f2421;
 }
 
-/* 생성된 스킨 — 64×64를 크게, 픽셀 또렷하게 */
+/* 3D 미리보기 캔버스 */
+.skin-3d {
+  align-self: center;
+  border-radius: 8px;
+  background: linear-gradient(160deg, #eef3ec, #dfe8db);
+}
+
+/* 전개도(64×64) — 보조로 작게, 픽셀 또렷하게 */
 .skin-img {
-  width: 256px;
-  height: 256px;
+  width: 96px;
+  height: 96px;
   align-self: center;
   image-rendering: pixelated;
   border: 1px solid #d4dad6;
-  border-radius: 8px;
+  border-radius: 6px;
   background: #f0f0f0;
 }
 

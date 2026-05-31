@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import SkinViewer3D from './SkinViewer3D'
 
 // 백엔드 주소 (FastAPI dev 서버)
 const API = 'http://localhost:8000'
@@ -137,8 +138,9 @@ function App() {
 
       {skin && (
         <div className="result">
-          <span>생성된 스킨 (64×64)</span>
-          <img className="skin-img" src={skin} alt="생성된 마인크래프트 스킨" />
+          <span>생성된 스킨 (3D 미리보기)</span>
+          <SkinViewer3D skin={skin} />
+          <img className="skin-img" src={skin} alt="스킨 전개도(64×64)" />
           <a className="download-btn" href={skin} download="skin.png">
             ⬇ 다운로드 (PNG)
           </a>
