@@ -76,16 +76,24 @@ async def generate_prompt(
 async def generate(
     idea: str = Form(None),
     image: UploadFile = File(None),
+    direct: bool = Form(False),
 ):
     """입력 → 프롬프트 → SDXL 스킨 PNG 생성 → 검증 → 반환.
 
+    direct=True 면 Gemini를 거치지 않고 idea(영어 프롬프트)를 그대로 사용.
     응답: {prompt, image(dataURL), valid, errors}
     """
     # torch/diffusers는 무거우니 여기서 지연 import
     from sdxl_skin import generate_skin
     from mc_skin_generator import validate_skin
 
-    prompt = await _build_prompt(idea, image)
+    if direct:
+        # Gemini 안 거침: 입력 텍스트를 프롬프트로 직행
+        if not idea or not idea.strip():
+            raise HTTPException(status_code=400, detail="직접 모드는 영어 프롬프트 입력이 필요합니다.")
+        prompt = idea.strip()
+    else:
+        prompt = await _build_prompt(idea, image)
 
     try:
         skin = generate_skin(prompt)  # 64×64 RGBA

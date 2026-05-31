@@ -17,6 +17,8 @@ function App() {
   const [error, setError] = useState('')
   // 드래그 중 여부 (박스 강조용)
   const [dragging, setDragging] = useState(false)
+  // 임시: Gemini 없이 입력 텍스트를 영어 프롬프트로 직행
+  const [direct, setDirect] = useState(true)
 
   // 이미지 파일 적용 (파일 선택 / 드래그앤드롭 공통)
   function applyImage(file) {
@@ -61,6 +63,7 @@ function App() {
       const form = new FormData()
       if (idea) form.append('idea', idea)
       if (imageFile) form.append('image', imageFile)
+      form.append('direct', direct)
 
       const res = await fetch(`${API}/generate`, {
         method: 'POST',
@@ -121,13 +124,27 @@ function App() {
 
       {/* 텍스트 아이디어 입력 */}
       <label className="field">
-        <span>아이디어 입력</span>
+        <span>{direct ? '영어 프롬프트 직접 입력' : '아이디어 입력'}</span>
         <textarea
           value={idea}
           onChange={(e) => setIdea(e.target.value)}
-          placeholder="예: 좀비 해적, 보라색 정장을 입은 마법사"
+          placeholder={
+            direct
+              ? '예: a green dinosaur in a blue jumpsuit with red gloves'
+              : '예: 좀비 해적, 보라색 정장을 입은 마법사'
+          }
           rows={3}
         />
+      </label>
+
+      {/* 임시 토글: Gemini 없이 직접 프롬프트 */}
+      <label className="toggle">
+        <input
+          type="checkbox"
+          checked={direct}
+          onChange={(e) => setDirect(e.target.checked)}
+        />
+        Gemini 없이 직접 프롬프트 (임시 · 영어로 입력)
       </label>
 
       <button className="generate-btn" onClick={handleGenerate} disabled={loading}>
