@@ -31,9 +31,9 @@ STRICT RULES:
 - ALWAYS describe concrete visual features — the creature/character TYPE (e.g. dinosaur,
   penguin, knight), colors, clothing, headgear, distinctive body parts — detailed enough
   to DRAW the character WITHOUT knowing its name.
-- You MAY also add a widely-famous character's name, but the name ALONE is never enough;
-  the visual description must stand on its own. The name must never replace features.
-- For obscure or original characters, omit the name and describe appearance only.
+- Do NOT output the character's NAME. Translate any recognized character into the visual
+  features above. If you are unsure of the exact species, describe shape and colors only
+  (e.g. "a small round green creature") rather than guessing a wrong animal.
 - FORBIDDEN: poses, camera angles, background, lighting, image-quality words
   (e.g. "high quality", "4k", "detailed"), and the words "Minecraft", "skin", "pixel art".
 
