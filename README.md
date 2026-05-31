@@ -4,6 +4,11 @@
 
 ![스크린샷](docs/screenshot.png)
 
+### 예시 결과
+| 텍스트 → 스킨 | 이미지 → 스킨 |
+|---|---|
+| ![기사 예시](docs/knight.png) | ![크롱 예시](docs/screenshot.png) |
+
 ## ✨ 기능
 - 텍스트 아이디어 또는 캐릭터 사진(드래그앤드롭) 입력
 - Gemini가 입력을 SDXL용 영어 프롬프트로 변환
