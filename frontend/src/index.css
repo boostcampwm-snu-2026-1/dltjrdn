@@ -23,7 +23,7 @@ body {
 h1 {
   margin: 0 0 8px;
   text-align: center;
-  color: #4a9c38; /* 마크 잔디 초록 */
+  color: #4a9c38;
 }
 
 .field {
@@ -34,7 +34,6 @@ h1 {
   color: #444;
 }
 
-/* + 업로드 박스 */
 .upload-box {
   position: relative;
   display: flex;
@@ -171,14 +170,12 @@ textarea:focus {
   color: #1f2421;
 }
 
-/* 3D 미리보기 캔버스 */
 .skin-3d {
   align-self: center;
   border-radius: 8px;
   background: linear-gradient(160deg, #eef3ec, #dfe8db);
 }
 
-/* 전개도(64×64) — 보조로 작게, 픽셀 또렷하게 */
 .skin-img {
   width: 96px;
   height: 96px;
