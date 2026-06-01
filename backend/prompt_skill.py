@@ -13,6 +13,7 @@
 
 import mimetypes
 import re
+import time
 
 from google import genai
 from google.genai import types
@@ -31,8 +32,11 @@ STRICT RULES:
 - ALWAYS describe concrete visual features — the creature/character TYPE (e.g. dinosaur,
   penguin, knight), colors, clothing, headgear, distinctive body parts — detailed enough
   to DRAW the character WITHOUT knowing its name.
-- Do NOT output the character's NAME. Translate any recognized character into the visual
-  features above. If you are unsure of the exact species, describe shape and colors only
+- Only if the subject is GLOBALLY iconic (a world-famous person or character almost
+  everyone would recognize, e.g. Spider-Man, Lionel Messi, Mario), you MAY start with
+  its name, then STILL add the visual features above (signature outfit, colors).
+  For anyone/anything less than globally famous, omit the name and describe appearance only.
+- If unsure of a creature's exact species, describe shape and colors only
   (e.g. "a small round green creature") rather than guessing a wrong animal.
 - FORBIDDEN: poses, camera angles, background, lighting, image-quality words
   (e.g. "high quality", "4k", "detailed"), and the words "Minecraft", "skin", "pixel art".
@@ -105,12 +109,24 @@ def build_skin_prompt(key: str, idea: str = None, image_path: str = None) -> str
         instruction = f"Turn this idea into one character prompt: {idea}"
     contents.append(instruction)
 
-    response = client.models.generate_content(
-        model=MODEL,
-        contents=contents,
-        config=config,
-    )
-    return _sanitize(response.text)
+    last_err = None
+    for attempt in range(3):
+        try:
+            response = client.models.generate_content(
+                model=MODEL,
+                contents=contents,
+                config=config,
+            )
+            return _sanitize(response.text)
+        except Exception as e:
+            last_err = e
+            msg = str(e).lower()
+            transient = "503" in msg or "unavailable" in msg or "overloaded" in msg
+            if transient and attempt < 2:
+                time.sleep(2 * (attempt + 1))
+                continue
+            raise
+    raise last_err
 
 
 if __name__ == "__main__":
