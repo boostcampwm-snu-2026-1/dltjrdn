@@ -1,28 +1,30 @@
 # 배포 (Deploy)
 
-프론트엔드는 Vercel 정적 배포, 백엔드(로컬 GPU)는 PC에서 실행 + cloudflared 터널로 임시 공개.
+스킨 생성이 로컬 GPU(SDXL)에 묶여 있어, 백엔드를 내 PC에서 실행하고 cloudflared 터널로 공개한다. **백엔드가 빌드된 프론트까지 함께 서빙**하므로, 터널 주소 하나로 전체 앱이 동작한다 (별도 프론트 호스팅·CORS 설정 불필요).
 
 ```
-[브라우저] → Vercel(프론트) → cloudflared 터널 → 내 PC 백엔드(:8000, GPU)
+[브라우저] → cloudflared 터널(https) → 내 PC 백엔드(:8000) → 프론트(dist) + API + GPU
 ```
 
-## 1. 백엔드 — 로컬 실행 + 터널
-1. 백엔드 실행: 루트에서 `dev.bat` (또는 `cd backend && uvicorn main:app --port 8000`).
-2. [cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/) 설치 후, 루트에서 `tunnel.bat` 실행 (`cloudflared tunnel --url http://localhost:8000`).
-3. 출력된 `https://xxxx.trycloudflare.com` 주소를 복사 → 공개 백엔드 URL.
-
-## 2. 프론트엔드 — Vercel
-1. Vercel에서 이 레포 Import → **Root Directory = `frontend`** 지정 (Framework는 Vite 자동 감지, [frontend/vercel.json](../frontend/vercel.json) 참고).
-2. Environment Variables 에 `VITE_API_URL` = 1번에서 복사한 터널 주소.
-3. Deploy → `https://your-app.vercel.app`.
-
-## 3. CORS 허용
-백엔드 `backend/.env` 에 배포 도메인을 추가하고 백엔드 재시작:
+## 1. 프론트 빌드
+```powershell
+cd frontend
+npm install
+npm run build
 ```
-ALLOWED_ORIGINS=https://your-app.vercel.app,http://localhost:5173
-```
+→ `frontend/dist` 생성. 백엔드가 이 폴더를 `/`에 서빙한다. (프론트 코드를 바꾸면 다시 빌드)
+
+## 2. 백엔드 실행
+- `backend/.env` 에 `GEMINI_API_KEY` 필요.
+- 루트에서 `dev.bat` (또는 `cd backend && uvicorn main:app --port 8000`).
+- 브라우저에서 `http://localhost:8000` 접속 → 프론트가 뜨고 스킨 생성까지 되면 정상.
+
+## 3. cloudflared 터널로 공개
+[cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/) 설치 후, 루트에서 `tunnel.bat` 실행 (= `cloudflared tunnel --url http://localhost:8000`).
+출력된 `https://xxxx.trycloudflare.com` 가 **공개 주소**. 이 한 주소로 접속하면 프론트·생성 전부 동작한다.
 
 ## 주의
-- 백엔드는 **GPU PC가 켜져 있고 터널이 떠 있을 때만** 동작한다.
-- cloudflared quick tunnel 주소는 임시라 재실행 시 바뀜 → 바뀌면 Vercel의 `VITE_API_URL`도 갱신.
+- 백엔드 PC가 켜져 있고 터널이 떠 있어야 동작한다.
+- quick tunnel 주소는 재실행 시 바뀐다 (고정이 필요하면 Cloudflare 계정 + named tunnel).
+- 프론트 코드를 수정하면 `npm run build` 를 다시 해야 최신이 서빙된다.
 - 모델/원본 코드가 GPL-3.0 → 공개 배포 시 소스공개 의무·모델 가중치 라이선스 확인.
