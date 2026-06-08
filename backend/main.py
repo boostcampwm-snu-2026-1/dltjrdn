@@ -16,9 +16,12 @@ except ImportError:
 
 app = FastAPI(title="마크 스킨생성기 API")
 
+_origins = os.environ.get("ALLOWED_ORIGINS", "http://localhost:5173")
+allow_origins = [o.strip() for o in _origins.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allow_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
