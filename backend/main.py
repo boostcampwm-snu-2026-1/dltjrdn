@@ -2,10 +2,12 @@ import base64
 import io
 import os
 import tempfile
+from pathlib import Path
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 load_dotenv()
 
@@ -87,3 +89,8 @@ async def generate(
     data_url = "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
 
     return {"prompt": prompt, "image": data_url, "valid": not errors, "errors": errors}
+
+
+_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if _dist.is_dir():
+    app.mount("/", StaticFiles(directory=str(_dist), html=True), name="frontend")

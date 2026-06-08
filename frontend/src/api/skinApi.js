@@ -1,4 +1,4 @@
-const API = 'http://localhost:8000'
+const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '')
 
 export async function generateSkin({ idea, imageFile, direct }) {
   const form = new FormData()
