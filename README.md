@@ -70,6 +70,7 @@ dev.bat                # 백+프론트 동시 실행
 - [아키텍처](docs/architecture.md) — 시스템 구조·데이터 흐름
 - [설계 결정](docs/design.md) — 왜 이렇게 만들었나
 - [체크리스트](docs/checklist.md) — 진행 상황
+- [배포](docs/deploy.md) — Vercel(프론트) + cloudflared 터널(백엔드)
 - [Git 규칙](docs/git.md) — 커밋 컨벤션
 
 ## ⚖️ 라이선스
