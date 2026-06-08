@@ -1,5 +1,6 @@
 import base64
 import io
+import mimetypes
 import os
 import tempfile
 from pathlib import Path
@@ -90,6 +91,9 @@ async def generate(
 
     return {"prompt": prompt, "image": data_url, "valid": not errors, "errors": errors}
 
+
+mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("text/css", ".css")
 
 _dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 if _dist.is_dir():
